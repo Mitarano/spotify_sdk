@@ -618,11 +618,15 @@ class SpotifySdkPlugin {
           message: 'Spotify player not connected!', code: 'Playback Error');
     }
 
+    var data = uri!.startsWith('spotify:track')
+        ? {
+            'uris': [uri]
+          }
+        : {'context_uri': uri};
+
     await _dio.put(
       '/play',
-      data: {
-        'uris': [uri]
-      },
+      data: data,
       queryParameters: {'device_id': _currentPlayer!.deviceID},
       options: Options(
         headers: {
