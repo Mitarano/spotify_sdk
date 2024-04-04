@@ -238,8 +238,7 @@ class SpotifySdkPlugin {
         await _setShuffle(call.arguments[ParamNames.shuffle] as bool?);
         break;
       case MethodNames.setRepeatMode:
-        await _setRepeatMode(
-            call.arguments[ParamNames.repeatMode] as RepeatMode?);
+        await _setRepeatMode(call.arguments[ParamNames.repeatMode] as String?);
         break;
       case MethodNames.resume:
         await promiseToFuture(_currentPlayer?.resume());
@@ -679,7 +678,7 @@ class SpotifySdkPlugin {
   }
 
   /// Sets the repeat mode.
-  Future _setRepeatMode(RepeatMode? repeatMode) async {
+  Future _setRepeatMode(String? repeatMode) async {
     if (_currentPlayer?.deviceID == null) {
       throw PlatformException(
           message: 'Spotify player not connected!',
@@ -689,7 +688,7 @@ class SpotifySdkPlugin {
     await _dio.put(
       '/repeat',
       queryParameters: {
-        'state': repeatMode.toString().substring(11),
+        'state': repeatMode,
         'device_id': _currentPlayer!.deviceID
       },
       options: Options(

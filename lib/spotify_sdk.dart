@@ -654,8 +654,8 @@ class SpotifySdk {
   /// the native platforms.
   static Future setRepeatMode({required RepeatMode repeatMode}) async {
     try {
-      return _channel.invokeMethod(
-          MethodNames.setRepeatMode, {ParamNames.repeatMode: repeatMode.index});
+      return _channel.invokeMethod(MethodNames.setRepeatMode,
+          {ParamNames.repeatMode: repeatMode.toString().substring(11)});
     } on Exception catch (e) {
       _logException(MethodNames.setRepeatMode, e);
       rethrow;
