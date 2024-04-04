@@ -108,6 +108,9 @@ class MethodNames {
   /// method name for [setRepeatMode]
   static const String setRepeatMode = 'setRepeatMode';
 
+  /// method name for [setPlaybackVolume]
+  static const String setPlaybackVolume = 'setPlaybackVolume';
+
   /// method name for [switchToLocalDevice]
   static const String switchToLocalDevice = "switchToLocalDevice";
 }
@@ -152,6 +155,9 @@ class ParamNames {
 
   /// param name for [repeatMode]
   static const String repeatMode = 'repeatMode';
+
+  /// param name for [volumePercent]
+  static const String volumePercent = 'volumePercent';
 
   /// param name for [podcastPlaybackSpeed]
   static const String podcastPlaybackSpeed = 'podcastPlaybackSpeed';

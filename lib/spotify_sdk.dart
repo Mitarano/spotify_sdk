@@ -662,6 +662,22 @@ class SpotifySdk {
     }
   }
 
+  /// Sets the playback volume
+  ///
+  /// Set [volumePercent] to a value between 0 and 100.
+  /// Throws a [PlatformException] if adding failed
+  /// Throws a [MissingPluginException] if the method is not implemented on
+  /// the native platforms.
+  static Future setPlaybackVolume({required int volumePercent}) async {
+    try {
+      return _channel.invokeMethod(MethodNames.setPlaybackVolume,
+          {ParamNames.volumePercent: volumePercent});
+    } on Exception catch (e) {
+      _logException(MethodNames.setRepeatMode, e);
+      rethrow;
+    }
+  }
+
   static void _logException(String method, Exception e) {
     if (e is PlatformException) {
       var message = e.message ?? '';

@@ -240,6 +240,10 @@ class SpotifySdkPlugin {
       case MethodNames.setRepeatMode:
         await _setRepeatMode(call.arguments[ParamNames.repeatMode] as String?);
         break;
+      case MethodNames.setPlaybackVolume:
+        await _setPlaybackVolume(
+            call.arguments[ParamNames.volumePercent] as int?);
+        break;
       case MethodNames.resume:
         await promiseToFuture(_currentPlayer?.resume());
         break;
@@ -689,6 +693,29 @@ class SpotifySdkPlugin {
       '/repeat',
       queryParameters: {
         'state': repeatMode,
+        'device_id': _currentPlayer!.deviceID
+      },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${await _getSpotifyAuthToken()}'
+        },
+      ),
+    );
+  }
+
+  /// Sets the playback volume.
+  Future _setPlaybackVolume(int? volumePercent) async {
+    if (_currentPlayer?.deviceID == null) {
+      throw PlatformException(
+          message: 'Spotify player not connected!',
+          code: 'Set Repeat Mode Error');
+    }
+
+    await _dio.put(
+      '/volume',
+      queryParameters: {
+        'volume_percent': volumePercent,
         'device_id': _currentPlayer!.deviceID
       },
       options: Options(
